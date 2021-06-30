@@ -17,6 +17,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { SettingsComponent } from './_pages/settings/settings.component';
 import { SlotBookingComponent } from './_pages/slot-booking/slot-booking.component';
+import { PreferencesComponent } from './_pages/preferences/preferences.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,11 +30,13 @@ import { SlotBookingComponent } from './_pages/slot-booking/slot-booking.compone
     NavComponent,
     HomeComponent,
     SettingsComponent,
-    SlotBookingComponent
+    SlotBookingComponent,
+    PreferencesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     LayoutModule,
     MatToolbarModule,
@@ -38,7 +46,11 @@ import { SlotBookingComponent } from './_pages/slot-booking/slot-booking.compone
     MatListModule,
     MatGridListModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
