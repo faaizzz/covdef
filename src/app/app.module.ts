@@ -16,13 +16,15 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { SettingsComponent } from './_pages/settings/settings.component';
+import { SlotBookingComponent } from './_pages/slot-booking/slot-booking.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     HomeComponent,
-    SettingsComponent
+    SettingsComponent,
+    SlotBookingComponent
   ],
   imports: [
     BrowserModule,

@@ -13,11 +13,11 @@
         <mat-icon>home</mat-icon>
          <span class="">Home</span> 
       </a>
-      <a mat-list-item href="#">
+      <a routerLink="/slot-booking" mat-list-item href="#">
         <mat-icon>date_range</mat-icon>
         Slot Booking
       </a>
-      <a mat-list-item href="#">
+      <a routerLink="/settings" mat-list-item href="#">
         <mat-icon>settings</mat-icon>
         Settings
       </a>
@@ -35,7 +35,8 @@
       </button>
       <span>Covid Defender</span>
     </mat-toolbar>
-    <app-home></app-home>
+    <router-outlet></router-outlet>
+    <!-- <app-home></app-home> -->
     <!-- Add Content Here -->
   </mat-sidenav-content>
 </mat-sidenav-container>
