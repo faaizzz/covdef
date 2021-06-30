@@ -56,20 +56,29 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="City" formControlName="city">
-            <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
-              City is <strong>required</strong>
+            <mat-select
+             placeholder="State"
+             (selectionChange)='onStateChanged($event)'
+             formControlName="state">
+              <mat-option 
+              *ngFor="let state of states" 
+              [value]="state.state_id">
+                {{ state.state_name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="addressForm.controls['state'].hasError('required')">
+              State is <strong>required</strong>
             </mat-error>
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-select placeholder="State" formControlName="state">
-              <mat-option *ngFor="let state of states" [value]="state.state_id">
-                {{ state.state_name }}
+            <mat-select placeholder="District" formControlName="district">
+              <mat-option *ngFor="let district of districts" [value]="district.district_id">
+                {{ district.district_name }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="addressForm.controls['state'].hasError('required')">
+            <mat-error *ngIf="addressForm.controls['district'].hasError('required')">
               State is <strong>required</strong>
             </mat-error>
           </mat-form-field>

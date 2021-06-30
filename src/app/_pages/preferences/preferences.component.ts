@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { District } from 'src/app/_models/district';
 import { State, States } from 'src/app/_models/state';
 import { CowinApiService } from 'src/app/_services/cowin-api.service';
 
@@ -11,6 +12,7 @@ import { CowinApiService } from 'src/app/_services/cowin-api.service';
 export class PreferencesComponent  implements OnInit {
 
   states: State[] = [];
+  districts: District[] = [];
 
 
   addressForm = this.fb.group({
@@ -21,6 +23,7 @@ export class PreferencesComponent  implements OnInit {
     address2: null,
     city: [null, Validators.required],
     state: [null, Validators.required],
+    district: [null, Validators.required],
     postalCode: [null, Validators.compose([
       Validators.required, Validators.minLength(5), Validators.maxLength(5)])
     ],
@@ -45,6 +48,18 @@ export class PreferencesComponent  implements OnInit {
     this.cowinApiService.getStates().subscribe(States => {
       this.states = States.states;
     })
+  }
+
+  getDistricts(districtId : string) {
+    this.cowinApiService.getDistricts(districtId).subscribe(Districts => {
+      this.districts = Districts.districts;
+    })
+  }
+
+  onStateChanged(event : any)  {
+    console.log(event.value);
+    this.getDistricts(event.value);
+    
   }
 
 }
