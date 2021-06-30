@@ -37,10 +37,11 @@ export class PreferencesComponent  implements OnInit {
   }
   ngOnInit(): void {
     this.getStates();
+    this.cowinApiService.findSlotsTomorrow();
+    
   }
 
   onSubmit(): void {
-    console.log(this.cowinApiService.getStates());
     alert('Thanks!');
   }
 
