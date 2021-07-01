@@ -8,6 +8,7 @@ import { formatDate } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatAccordion } from '@angular/material/expansion';
 
 export interface PeriodicElement {
   name: string;
@@ -65,6 +66,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 
   constructor(private fb: FormBuilder, private cowinApiService: CowinApiService) {
   }
