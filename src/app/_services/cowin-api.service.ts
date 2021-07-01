@@ -33,10 +33,11 @@ export class CowinApiService {
     })
   }
 
-  findSlotsNextDays(district_id: string,count: number) {
+  findSlotsNextDays(district_id: string,count: number): Session[] {
 
     let i = 0;
     let dataArr : Observable<Slots>[] = [];
+    let result: Session[] = [];
     while(i<count){
 
       let data = this.findSlotByDistrict(district_id, this.getDateNextDay(i));
@@ -48,15 +49,17 @@ export class CowinApiService {
 
     multicall.subscribe(slots => {
 
-      let result: Session[] = [];
 
       slots.forEach(slot => {
         result = result.concat(slot.sessions);
       })
-
+      
+      console.log("Inside subscribe");      
       console.log(result);
+      return result;
 
     })
+    return result;
   }
 
   getDateToday() {
@@ -79,5 +82,6 @@ export class CowinApiService {
     var result = dd + '-' + mm + '-' + yyyy;
     return result;
   }
+
 
 }
