@@ -50,6 +50,7 @@ export class HomeComponent  implements OnInit,AfterViewInit  {
     state: [null, Validators.required],
     district: [null, Validators.required],
     day: 1,    
+    vaccine:null,
     city: [null, Validators.required],
     company: null,
     firstName: [null, Validators.required],
@@ -59,7 +60,7 @@ export class HomeComponent  implements OnInit,AfterViewInit  {
     postalCode: [null, Validators.compose([
       Validators.required, Validators.minLength(5), Validators.maxLength(5)])
     ],
-    dose: ['dose1', Validators.required]
+    dose: null
   });
 
   hasUnitNumber = false;
@@ -73,14 +74,14 @@ export class HomeComponent  implements OnInit,AfterViewInit  {
     // this.dataSource = new MatTableDataSource(this.sessions);
   }
   ngOnInit(): void {
-    // this.getStates();
+    this.getStates();
     this.autoSearch();
     // this.cowinApiService.findSlotsTomorrow("307");    
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
   }
   
   applyFilter(event: Event) {
@@ -139,6 +140,9 @@ export class HomeComponent  implements OnInit,AfterViewInit  {
         this.sessions = this.sessions.concat(filtredSlots);
         this.sessions = this.sessions.sort((a,b)=> (b.available_capacity - a.available_capacity));
         this.dataSource = new MatTableDataSource<Session>(this.sessions);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+    
       })
       
       console.log("Inside subscribe");      
