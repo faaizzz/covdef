@@ -29,3 +29,7 @@
 table {
   width: 100%;
 }
+
+.mat-raised-button{
+  margin-left: 20px !important;
+}

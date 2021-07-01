@@ -33,7 +33,7 @@ export class CowinApiService {
     })
   }
 
-  findSlotsNextDays(district_id: string,count: number): Session[] {
+  findSlotsNextDays(district_id: string,count: number): Observable<Slots[]> {
 
     let i = 0;
     let dataArr : Observable<Slots>[] = [];
@@ -47,19 +47,7 @@ export class CowinApiService {
     
     let multicall = forkJoin(dataArr);
 
-    multicall.subscribe(slots => {
-
-
-      slots.forEach(slot => {
-        result = result.concat(slot.sessions);
-      })
-      
-      console.log("Inside subscribe");      
-      console.log(result);
-      return result;
-
-    })
-    return result;
+    return multicall;
   }
 
   getDateToday() {

@@ -6,6 +6,7 @@ import { District } from 'src/app/_models/district';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CowinApiService } from 'src/app/_services/cowin-api.service';
 import { Session } from 'src/app/_models/session';
+import { formatDate } from '@angular/common';
 
 export interface PeriodicElement {
   name: string;
@@ -34,14 +35,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class HomeComponent  implements OnInit  {
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['date','name', 'pincode','min_age_limit','vaccine', 'available_capacity_dose1','available_capacity_dose2','fee'];
   dataSource = ELEMENT_DATA;
 
   states: State[] = [];
   districts: District[] = [];
   days: Array<number> = [1, 2, 3,4,5,6,7,14];
   sessions: Session[]=[];
-
+  todaysDataTime = '';
 
   searchForm = this.fb.group({
     state: [null, Validators.required],
@@ -66,15 +67,19 @@ export class HomeComponent  implements OnInit  {
   }
   ngOnInit(): void {
     this.getStates();
-    this.cowinApiService.findSlotsTomorrow("307");
-    
+    // this.cowinApiService.findSlotsTomorrow("307");    
   }
 
   onSubmit(): void {
-    this.sessions = this.cowinApiService.findSlotsNextDays("307",7);
-    console.log("outside");    
-    console.log(this.sessions);    
-    alert('Thanks!');
+    let today= new Date();
+    this.todaysDataTime = formatDate(today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
+    this.findSlotsNextDays("307",7);
+    setInterval(() => {
+      this.findSlotsNextDays("307",7);
+      today= new Date();
+      this.todaysDataTime = formatDate(today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
+    }, 10000);
+
   }
 
   getStates() {
@@ -93,6 +98,21 @@ export class HomeComponent  implements OnInit  {
     console.log(event.value);
     this.getDistricts(event.value);
     
+  }
+
+  findSlotsNextDays(district_id: string,count: number){
+    this.cowinApiService.findSlotsNextDays(district_id,count).subscribe(slots => {
+      this.sessions = [];
+      slots.forEach(slot => {
+        let filtredSlots = slot.sessions.filter(x=>x.available_capacity > 0); 
+        this.sessions = this.sessions.concat(filtredSlots);
+        this.sessions = this.sessions.sort((a,b)=> (b.available_capacity - a.available_capacity));
+      })
+      
+      console.log("Inside subscribe");      
+      console.log(this.sessions);
+    })
+
   }
 
 
