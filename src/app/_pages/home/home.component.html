@@ -30,19 +30,21 @@
             </mat-error>
           </mat-form-field>
         </div>
+
+
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-select placeholder="Days" formControlName="day">
-              <mat-option *ngFor="let day of days" [value]="day">
-                {{ day }}
-              </mat-option>
+            <mat-label>Vaccine</mat-label>
+            <mat-select [(value)]="selectedVaccineTypes" multiple>
+              <mat-option *ngFor="let vaccineType of vaccineTypes" [value]="vaccineType">{{vaccineType}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
+
         <div class="col">
           <mat-card-actions>
             <button mat-raised-button color="primary" type="submit">Start Monitoring</button>
-            <button mat-raised-button color="warn" type="button">Reset</button>
+            <button mat-raised-button color="warn" (click)="reset()" type="button">Reset</button>
           </mat-card-actions>
         </div>
 
@@ -57,46 +59,49 @@
             </mat-select>
           </mat-form-field>
         </div>
-
+       
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Days" formControlName="day">
+              <mat-option *ngFor="let day of days" [value]="day">
+                {{ day }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Vaccine</mat-label>
-            <mat-select [(value)]="selectedVaccineTypes" multiple>
-              <mat-option *ngFor="let vaccineType of vaccineTypes" [value]="vaccineType">{{vaccineType}}</mat-option>
+            <mat-label>Age</mat-label>
+            <mat-select [(value)]="selectedAges" multiple>
+              <mat-option *ngFor="let age of ages" [value]="age">{{age}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
 
         <div class="col">
           <section class="example-section">
-            <mat-checkbox class="example-margin p-2" [checked]='true' (change)="onDose1Changed($event)">Dose 1
+            <mat-checkbox class="example-margin p-2" [checked]="dose1" (change)="onDose1Changed($event)">Dose 1
             </mat-checkbox>
-            <mat-checkbox class="example-margin p-2" [checked]='true' (change)="onDose2Changed($event)">Dose 2
-            </mat-checkbox>
-          </section>
-
-        </div>
-        <div class="col">
-          <section class="example-section">
-            <mat-checkbox class="example-margin p-2" [checked]='true' (change)="onAge18Changed($event)">18+
-            </mat-checkbox>
-            <mat-checkbox class="example-margin p-2" [checked]='true' (change)="onAge40Changed($event)">40-44
-            </mat-checkbox>
-            <mat-checkbox class="example-margin p-2" [checked]='true' (change)="onAge45Changed($event)">45+
+            <mat-checkbox class="example-margin p-2" [checked]="dose2" (change)="onDose2Changed($event)">Dose 2
             </mat-checkbox>
           </section>
 
         </div>
 
+
         <div class="col">
           <section class="example-section">
-            <mat-checkbox class="example-margin p-2" [checked]='true' (change)="onFeesFreeChanged($event)">Free
+            <mat-checkbox class="example-margin p-2" [checked]="feesFree" (change)="onFeesFreeChanged($event)">Free
             </mat-checkbox>
-            <mat-checkbox class="example-margin p-2" [checked]='true' (change)="onFeesPaidChanged($event)">Paid
+            <mat-checkbox class="example-margin p-2" [checked]="feesPaid" (change)="onFeesPaidChanged($event)">Paid
             </mat-checkbox>
           </section>
 
+        </div>
+
+        <div class="col">
+          <label [hidden]="!todaysDataTime">Last Updated : <strong>{{todaysDataTime}}</strong></label>
         </div>
 
 
@@ -113,24 +118,12 @@
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. hosp" #input>
           </mat-form-field>
         </div>
-        <div class="col p-10">
-          <label>Last Updated Time : {{todaysDataTime}}</label>
-        </div>
         <div class="col">
           <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
         </div>
       </div>
       <div>
         <table mat-table [dataSource]="dataSource" class="mat-elevation-28" matSort>
-
-          <!--- Note that these columns can be defined in any order.
-                  The actual rendered columns are set as a property on the row definition" -->
-
-          <!-- Position Column -->
-          <!-- <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
-            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-          </ng-container> -->
 
           <!-- date Column -->
 

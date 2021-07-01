@@ -30,11 +30,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   districts: District[] = [];
   days: Array<number> = [1, 2, 3, 4, 5, 6, 7, 14];
   vaccineTypes: Array<string> = ["COVAXIN", "COVISHIELD", "SPUTNIK", "PFIZER"];
+  ages: Array<number> = [18, 40, 45];
   timeIntervals: Array<number> = [5, 10, 15, 20, 30, 60];
   sessions: Session[] = [];
   todaysDataTime = '';
   timer: number = 0;
   selectedVaccineTypes: Array<string> = [];
+  selectedAges: Array<number> = [];
   dose1: boolean = true;
   dose2: boolean = true;
   age18: boolean = true;
@@ -54,16 +56,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     dose2: true,
     vaccineType: [],
     timeInterval: 5,
-    city: [null, Validators.required],
-    company: null,
-    firstName: [null, Validators.required],
-    lastName: [null, Validators.required],
-    address: [null, Validators.required],
-    address2: null,
-    postalCode: [null, Validators.compose([
-      Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-    ],
-    dose: null
   });
 
 
@@ -75,13 +67,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private fb: FormBuilder, private cowinApiService: CowinApiService) {
-    // this.autoSearch();
-    // this.dataSource = new MatTableDataSource(this.sessions);
   }
+
   ngOnInit(): void {
-    this.getStates();
-    this.getDistricts(this.searchForm.value.state);
-    // this.cowinApiService.findSlotsTomorrow("307");    
+    this.reset();
   }
 
   ngAfterViewInit() {
@@ -101,10 +90,42 @@ export class HomeComponent implements OnInit, AfterViewInit {
   onSubmit(): void {
     console.log(this.searchForm);
     console.log(this.selectedVaccineTypes);
+    console.log(this.selectedAges);
 
     this.stopTimer();
     this.autoSearch();
     // this.search();
+
+  }
+
+  reset(){
+    this.stopTimer();
+    this.dataSource = new MatTableDataSource();
+    this.searchForm.patchValue(
+      {
+        state: 17,
+        district: 307,
+        day: 7,
+        dose1: true,
+        dose2: true,
+        vaccineType: [],
+        timeInterval: 5
+      }
+    )
+    this.getStates();
+    this.getDistricts(this.searchForm.value.state);
+    this.sessions = [];
+    this.todaysDataTime = '';
+    this.timer = 0;
+    this.selectedVaccineTypes = [];
+    this.selectedAges= [];
+    this.dose1= true;
+    this.dose2 = true;
+    this.age18 = true;
+    this.age40 = true;
+    this.age45 = true;
+    this.feesFree = true;
+    this.feesPaid = true;
 
   }
 
@@ -188,6 +209,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
           );
         this.sessions = this.sessions.concat(filtredSlots);
         this.sessions = this.sessions.sort((a, b) => (b.available_capacity - a.available_capacity));
+
+        // Filter vaccine
         if (this.selectedVaccineTypes.length > 0) {
           this.sessions = this.sessions.filter(
             x => this.selectedVaccineTypes.includes(x.vaccine)
@@ -195,8 +218,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         }
 
+        // Filter Age
+        if (this.selectedAges.length > 0) {
+          this.sessions = this.sessions.filter(
+            x => this.selectedAges.includes(x.min_age_limit)
+          );
 
-        //Filter Dose
+        }
+
+
+        // Filter Dose
 
         if (this.dose1 && this.dose2) {
           this.sessions = this.sessions.filter(
@@ -214,7 +245,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.sessions = [];
         }
 
-        //Filter Fee Type
+        // Filter Fee Type
 
         if (this.feesFree && this.feesPaid) {
         } else if (this.feesFree) {
@@ -228,22 +259,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
         } else {
           this.sessions = [];
         }
-
-        // //Filter Age
-
-        // if (this.feesFree && this.feesPaid) {
-        // } else if (this.feesFree) {
-        //   this.sessions = this.sessions.filter(
-        //     x => x.fee_type == "Free"
-        //   );
-        // } else if (this.feesPaid) {
-        //   this.sessions = this.sessions.filter(
-        //     x => x.fee_type == "Paid"
-        //   );
-        // } else {
-        //   this.sessions = [];
-        // }
-
 
 
         console.log(this.sessions);
