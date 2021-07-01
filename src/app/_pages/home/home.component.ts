@@ -66,11 +66,16 @@ export class HomeComponent  implements OnInit  {
 
   }
   ngOnInit(): void {
-    this.getStates();
+    // this.getStates();
+    this.autoSearch();
     // this.cowinApiService.findSlotsTomorrow("307");    
   }
 
   onSubmit(): void {
+
+  }
+
+  autoSearch(){
     let today= new Date();
     this.todaysDataTime = formatDate(today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
     this.findSlotsNextDays("307",7);
@@ -78,8 +83,7 @@ export class HomeComponent  implements OnInit  {
       this.findSlotsNextDays("307",7);
       today= new Date();
       this.todaysDataTime = formatDate(today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
-    }, 10000);
-
+    }, 5000);
   }
 
   getStates() {
@@ -104,7 +108,13 @@ export class HomeComponent  implements OnInit  {
     this.cowinApiService.findSlotsNextDays(district_id,count).subscribe(slots => {
       this.sessions = [];
       slots.forEach(slot => {
-        let filtredSlots = slot.sessions.filter(x=>x.available_capacity > 0); 
+        let filtredSlots = slot.sessions
+        .filter(
+          x=>x.available_capacity > 0
+          && x.fee == "0"
+          && x.vaccine == "COVISHIELD"
+          // && x.max_age_limit == 45
+          ); 
         this.sessions = this.sessions.concat(filtredSlots);
         this.sessions = this.sessions.sort((a,b)=> (b.available_capacity - a.available_capacity));
       })
