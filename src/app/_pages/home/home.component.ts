@@ -16,41 +16,35 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent  implements OnInit,AfterViewInit  {
+export class HomeComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['date','name', 'pincode','min_age_limit','vaccine', 'available_capacity_dose1','available_capacity_dose2','fee'];
-  // dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['date', 'name', 'pincode', 'min_age_limit', 'vaccine', 'available_capacity_dose1', 'available_capacity_dose2', 'fee'];
   dataSource: MatTableDataSource<Session>;
 
   states: State[] = [];
   districts: District[] = [];
-  days: Array<number> = [1, 2, 3,4,5,6,7,14];
-  sessions: Session[]=[];
+  days: Array<number> = [1, 2, 3, 4, 5, 6, 7, 14];
+  vaccineTypes: Array<string> = ["COVAXIN","COVISHIELD","SPUTNIK","PFIZER"];
+  timeIntervals: Array<number> = [5, 10, 15, 20, 30, 60];
+  sessions: Session[] = [];
   todaysDataTime = '';
+  timer: number = 0;
+  selectedVaccineTypes:Array<string> = [];
+
+
+
 
   searchForm = this.fb.group({
-    state: [null, Validators.required],
-    district: [null, Validators.required],
-    day: 1,    
-    vaccine:null,
+    state: 17,
+    district: 307,
+    day: 7,
+    vaccineType: [],
+    timeInterval: 5,
     city: [null, Validators.required],
     company: null,
     firstName: [null, Validators.required],
@@ -63,19 +57,21 @@ export class HomeComponent  implements OnInit,AfterViewInit  {
     dose: null
   });
 
+  
+
   hasUnitNumber = false;
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private fb: FormBuilder,private cowinApiService: CowinApiService) {
+  constructor(private fb: FormBuilder, private cowinApiService: CowinApiService) {
     // this.autoSearch();
     // this.dataSource = new MatTableDataSource(this.sessions);
   }
   ngOnInit(): void {
     this.getStates();
-    this.autoSearch();
+    this.getDistricts(this.searchForm.value.state);
     // this.cowinApiService.findSlotsTomorrow("307");    
   }
 
@@ -83,70 +79,91 @@ export class HomeComponent  implements OnInit,AfterViewInit  {
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
   }
-  
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
-     
-     } this.dataSource.paginator.firstPage();
-    }
+
+    } this.dataSource.paginator.firstPage();
+  }
 
   onSubmit(): void {
+    console.log(this.searchForm);
+    console.log(this.selectedVaccineTypes);
+    
+    this.stopTimer();
+    this.autoSearch();
+    // this.search();
 
   }
 
-  autoSearch(){
-    let today= new Date();
+  autoSearch() {
+    let today = new Date();
     this.todaysDataTime = formatDate(today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
-    this.findSlotsNextDays("307",7);
-    setInterval(() => {
-      this.findSlotsNextDays("307",7);
-      today= new Date();
-      this.todaysDataTime = formatDate(today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
-    }, 5000);
+    this.findSlotsNextDays(this.searchForm.value.district, this.searchForm.value.day);
+    this.timer = window.setInterval(() => {
+      this.search();     
+    }, (1000 * this.searchForm.value.timeInterval));
+  }
+
+  stopTimer(){
+    clearInterval(this.timer);
+  }
+
+  search(){
+    let today = new Date();
+    this.findSlotsNextDays(this.searchForm.value.district, this.searchForm.value.day);
+    today = new Date();
+    this.todaysDataTime = formatDate(today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
   }
 
   getStates() {
     this.cowinApiService.getStates().subscribe(States => {
       this.states = States.states;
+
     })
   }
 
-  getDistricts(districtId : string) {
+  getDistricts(districtId: string) {
     this.cowinApiService.getDistricts(districtId).subscribe(Districts => {
       this.districts = Districts.districts;
     })
   }
 
-  onStateChanged(event : any)  {
+  onStateChanged(event: any) {
     console.log(event.value);
     this.getDistricts(event.value);
-    
+
   }
 
-  findSlotsNextDays(district_id: string,count: number){
-    this.cowinApiService.findSlotsNextDays(district_id,count).subscribe(slots => {
+  findSlotsNextDays(district_id: string, count: number) {
+    this.cowinApiService.findSlotsNextDays(district_id, count).subscribe(slots => {
       this.sessions = [];
       slots.forEach(slot => {
         let filtredSlots = slot.sessions
-        .filter(
-          x=>x.available_capacity > 0
-          && x.fee == "0"
-          // && x.vaccine == "COVISHIELD"
-          // && x.max_age_limit == 45
-          ); 
+          .filter(
+            x => x.available_capacity > 0
+            // && x.fee == "0"
+            // && x.vaccine == "COVISHIELD"
+            // && x.max_age_limit == 45
+          );
         this.sessions = this.sessions.concat(filtredSlots);
-        this.sessions = this.sessions.sort((a,b)=> (b.available_capacity - a.available_capacity));
+        this.sessions = this.sessions.sort((a, b) => (b.available_capacity - a.available_capacity));
+        if(this.selectedVaccineTypes.length > 0){
+          console.log("vaccine filter");
+          this.sessions = this.sessions.filter(
+            x=> this.selectedVaccineTypes.includes(x.vaccine)
+          );
+          
+        }
         this.dataSource = new MatTableDataSource<Session>(this.sessions);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-    
+
       })
-      
-      console.log("Inside subscribe");      
-      console.log(this.sessions);
+
     })
 
   }

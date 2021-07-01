@@ -1,7 +1,7 @@
 <form [formGroup]="searchForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="slot-card">
     <mat-card-header>
-      <mat-card-title>Slot Availability Information</mat-card-title>
+      <mat-card-title>Slot Availability Monitor</mat-card-title>
     </mat-card-header>
     <mat-card-content>
 
@@ -40,20 +40,24 @@
           </mat-form-field>
         </div>
         <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-          </mat-form-field>
-        </div>
-        <div class="col">
           <mat-card-actions>
-            <button mat-raised-button color="primary" type="submit">Search</button>
+            <button mat-raised-button color="primary" type="submit">Start Monitoring</button>
             <button mat-raised-button color="warn" type="button">Reset</button>
           </mat-card-actions>
         </div>
 
       </div>
       <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Time Interval" formControlName="timeInterval">
+              <mat-option *ngFor="let timeInterval of timeIntervals" [value]="timeInterval">
+                {{ timeInterval }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <div class="col">
 
           <mat-radio-group formControlName="dose">
@@ -62,10 +66,12 @@
           </mat-radio-group>
         </div>
         <div class="col">
-          <mat-radio-group formControlName="vaccine">
-            <mat-radio-button value="COVAXIN">COVAXIN</mat-radio-button>
-            <mat-radio-button value="COVISHIELD">COVISHIELD</mat-radio-button>
-          </mat-radio-group>
+          <mat-form-field class="full-width">
+            <mat-label>Vaccine</mat-label>
+            <mat-select [(value)]="selectedVaccineTypes" multiple >
+              <mat-option *ngFor="let vaccineType of vaccineTypes" [value]="vaccineType">{{vaccineType}}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
     </mat-card-content>
@@ -73,6 +79,20 @@
   <mat-card class="slot-card">
 
     <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Search Table</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. hosp" #input>
+          </mat-form-field>
+        </div>
+        <div class="col p-10">
+          <label>Last Updated Time : {{todaysDataTime}}</label>
+        </div>
+        <div class="col">
+          <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+        </div>
+      </div>
       <div >
         <table mat-table [dataSource]="dataSource" class="mat-elevation-28" matSort>
 
@@ -145,18 +165,6 @@
 
 
       </div>
-      <div class="row">
-        <div class="col p-10">
-          <label>Last Updated Time : {{todaysDataTime}}</label>
-        </div>
-        <div class="col">
-          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-        </div>
-      </div>
-
-
-
-
 
     </mat-card-content>
 
