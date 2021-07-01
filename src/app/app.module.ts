@@ -9,7 +9,6 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { HomeComponent } from './_pages/home/home.component';
 import { SettingsComponent } from './_pages/settings/settings.component';
 import { SlotBookingComponent } from './_pages/slot-booking/slot-booking.component';
-import { PreferencesComponent } from './_pages/preferences/preferences.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -57,8 +56,7 @@ import { MatTableModule } from '@angular/material/table';
     NavComponent,
     HomeComponent,
     SettingsComponent,
-    SlotBookingComponent,
-    PreferencesComponent
+    SlotBookingComponent
   ],
   imports: [
     BrowserModule,
