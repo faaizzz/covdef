@@ -42,6 +42,7 @@ export class PreferencesComponent  implements OnInit {
   }
 
   onSubmit(): void {
+    this.cowinApiService.findSlotsNextDays(7);
     alert('Thanks!');
   }
 
