@@ -27,22 +27,21 @@ export class CowinApiService {
     return this.http.get<Slots>(this.baseUrl + 'appointment/sessions/public/findByDistrict?district_id=' + district_id + '&date=' + date);
   }
 
-  findSlotsTomorrow() {
-    this.findSlotByDistrict("307", this.getDateNextDay(1)).subscribe(slots => {
+  findSlotsTomorrow(district_id: string) {
+    this.findSlotByDistrict(district_id, this.getDateNextDay(1)).subscribe(slots => {
       console.log(slots);
     })
   }
 
-  findSlotsNextDays(count: number) {
+  findSlotsNextDays(district_id: string,count: number) {
 
     let i = 0;
     let dataArr : Observable<Slots>[] = [];
     while(i<count){
 
-      console.log(i);
-      i++;
-      let data = this.findSlotByDistrict("307", this.getDateNextDay(i));
+      let data = this.findSlotByDistrict(district_id, this.getDateNextDay(i));
       dataArr.push(data);
+      i++;
     }
     
     let multicall = forkJoin(dataArr);

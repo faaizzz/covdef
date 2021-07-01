@@ -37,12 +37,12 @@ export class PreferencesComponent  implements OnInit {
   }
   ngOnInit(): void {
     this.getStates();
-    this.cowinApiService.findSlotsTomorrow();
+    this.cowinApiService.findSlotsTomorrow("307");
     
   }
 
   onSubmit(): void {
-    this.cowinApiService.findSlotsNextDays(7);
+    this.cowinApiService.findSlotsNextDays("307",7);
     alert('Thanks!');
   }
 
