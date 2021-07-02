@@ -50,8 +50,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
 
   searchForm = this.fb.group({
-    state: 17,
-    district: 307,
+    state: [17, Validators.required],
+    district: [307, Validators.required],
     day: 7,
     dose1: true,
     dose2: true,
@@ -91,11 +91,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   onSubmit(): void {
     console.log(this.searchForm);
-    console.log(this.selectedVaccineTypes);
-    console.log(this.selectedAges);
-
+    // console.log(this.selectedVaccineTypes);
+    // console.log(this.selectedAges);
     this.stopTimer();
-    this.autoSearch();
+    if(this.searchForm.status == "VALID"){
+      this.autoSearch();
+      this.accordion.closeAll();
+    }
     // this.search();
 
   }
@@ -105,8 +107,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource();
     this.searchForm.patchValue(
       {
-        state: 17,
-        district: 307,
+        state: null,
+        district: null,
         day: 7,
         dose1: true,
         dose2: true,
@@ -165,6 +167,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   onStateChanged(event: any) {
+    this.searchForm.patchValue(
+      {
+        district: null
+      }
+    )
     console.log(event.value);
     this.getDistricts(event.value);
 
