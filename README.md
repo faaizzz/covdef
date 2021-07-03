@@ -1,4 +1,13 @@
 # CovDef
+Live Demo : [Covid Defender](https://covdef.z30.web.core.windows.net/)
+
+# Features
+* Live update on Covid Vaccine Availability of each districts in India.
+* Filtering based on Vaccine Type, Age, Dose and Fees.
+* Automatic page refresh based on user defined time interval. 
+* Table search and sort options.
+
+# CovDef Develpoment Guide
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.5.
 

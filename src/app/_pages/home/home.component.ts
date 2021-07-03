@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   days: Array<number> = [1, 2, 3, 4, 5, 6, 7, 14];
   vaccineTypes: Array<string> = ["COVAXIN", "COVISHIELD", "SPUTNIK", "PFIZER"];
   ages: Array<number> = [18, 40, 45];
-  timeIntervals: Array<number> = [5, 10, 15, 20, 30, 60];
+  timeIntervals: Array<number> = [2,3,5, 10, 15, 20, 30, 60];
   sessions: Session[] = [];
   todaysDataTime = '';
   timer: number = 0;
@@ -104,7 +104,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   reset(){
     this.stopTimer();
+
     this.dataSource = new MatTableDataSource();
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
     this.searchForm.patchValue(
       {
         state: null,
