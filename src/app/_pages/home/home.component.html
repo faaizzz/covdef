@@ -1,4 +1,51 @@
 <form [formGroup]="searchForm" novalidate (ngSubmit)="onSubmit()">
+
+  <!-- <div class="example-header" fxLayout="row">
+    <mat-form-field>
+      <input matInput  placeholder="Filter">
+    </mat-form-field>
+  </div>
+
+  <div class="bounds">
+
+    <div class="content" fxLayout="row" fxLayout.xs="column" fxFlexFill>
+  
+      <div fxFlex="15" class="sec1" fxFlex.xs="55">
+        first-section
+      </div>
+      <div fxFlex="30" class="sec2">
+        second-section
+      </div>
+      <div fxFlex="55" class="sec3" fxFlex.xs="15">
+        third-section
+      </div>
+  
+    </div>
+    <div class="content" fxLayout="row" fxLayout.xs="column" fxFlexFill>
+  
+      <div fxFlex="15" class="sec1" fxFlex.xs="15">
+        first-section
+      </div>
+      <div fxFlex="15" class="sec2" fxFlex.xs="15">
+        second-section
+      </div>
+      <div fxFlex="15" class="sec3" fxFlex.xs="15">
+        third-section
+      </div>
+      <div fxFlex="15" class="sec4" fxFlex.xs="55">
+        fourh-section
+      </div>
+      <div fxFlex="15" class="sec5" fxFlex.xs="15">
+        fifth-section
+      </div>
+      <div fxFlex="15" class="sec6" fxFlex.xs="15">
+        sixth-section
+      </div>
+  
+    </div>
+  
+  </div> -->
+
   <mat-card class="slot-card">
     <mat-card-header>
       <mat-card-title>Slot Availability Monitor</mat-card-title>
@@ -12,11 +59,11 @@
               Filter Criteria
             </mat-panel-title>
             <mat-panel-description>
-              <label>Start monitoring the available slots live with filters</label>
+              <!-- <label>Start monitoring the available slots live with filters</label> -->
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <div class="row">
-            <div class="col">
+          <div fxLayout="row wrap" fxLayoutGap="32px" fxLayoutAlign="flex-start" fxLayout.xs="column">
+            <div fxFlex="0 1 calc(20% - 32px)">
               <mat-form-field class="full-width">
                 <mat-select placeholder="State" (selectionChange)='onStateChanged($event)' formControlName="state">
                   <mat-option *ngFor="let state of states" [value]="state.state_id">
@@ -28,7 +75,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="col">
+            <div fxFlex="0 1 calc(20% - 32px)">
               <mat-form-field class="full-width">
                 <mat-select placeholder="District" formControlName="district">
                   <mat-option *ngFor="let district of districts" [value]="district.district_id">
@@ -40,17 +87,18 @@
                 </mat-error>
               </mat-form-field>
             </div>
-    
-    
-            <div class="col">
+
+
+            <div fxFlex="0 1 calc(20% - 32px)">
               <mat-form-field class="full-width">
                 <mat-label>Vaccine</mat-label>
                 <mat-select [(value)]="selectedVaccineTypes" multiple>
-                  <mat-option *ngFor="let vaccineType of vaccineTypes" [value]="vaccineType">{{vaccineType}}</mat-option>
+                  <mat-option *ngFor="let vaccineType of vaccineTypes" [value]="vaccineType">{{vaccineType}}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col">
+            <div fxFlex="0 1 calc(20% - 32px)">
               <mat-form-field class="full-width">
                 <mat-select placeholder="Time Interval in seconds" formControlName="timeInterval">
                   <mat-option *ngFor="let timeInterval of timeIntervals" [value]="timeInterval">
@@ -59,8 +107,8 @@
                 </mat-select>
               </mat-form-field>
             </div>
-    
-            <div class="col">
+
+            <div fxFlex="0 1 calc(20% - 32px)">
               <mat-form-field class="full-width">
                 <mat-select placeholder="Days" formControlName="day">
                   <mat-option *ngFor="let day of days" [value]="day">
@@ -69,8 +117,8 @@
                 </mat-select>
               </mat-form-field>
             </div>
-    
-            <div class="col">
+
+            <div fxFlex="0 1 calc(20% - 32px)">
               <mat-form-field class="full-width">
                 <mat-label>Age</mat-label>
                 <mat-select [(value)]="selectedAges" multiple>
@@ -79,56 +127,46 @@
               </mat-form-field>
             </div>
 
-    
-          </div>
 
-          <div class="row">
-
-    
-            <div class="col">
+            <div fxFlex="0 1 calc(20% - 32px)">
               <section class="example-section">
                 <mat-checkbox class="example-margin p-2" [checked]="dose1" (change)="onDose1Changed($event)">Dose 1
                 </mat-checkbox>
-                <mat-checkbox class="example-margin" [checked]="dose2" (change)="onDose2Changed($event)">Dose 2
+                <mat-checkbox class="example-margin p-2" [checked]="dose2" (change)="onDose2Changed($event)">Dose 2
                 </mat-checkbox>
               </section>
-    
+
             </div>
 
-            <div class="col">
+            <div fxFlex="0 1 calc(20% - 32px)">
               <section class="example-section">
                 <mat-checkbox class="example-margin p-2" [checked]="feesFree" (change)="onFeesFreeChanged($event)">Free
                 </mat-checkbox>
-                <mat-checkbox class="example-margin" [checked]="feesPaid" (change)="onFeesPaidChanged($event)">Paid
+                <mat-checkbox class="example-margin p-2" [checked]="feesPaid" (change)="onFeesPaidChanged($event)">Paid
                 </mat-checkbox>
               </section>
-    
-            </div>  
-            <div class="col">
 
             </div>
-            <div class="col">
-
-            </div>
-                <div class="col">
-                  <mat-card-actions>
-                    <button mat-raised-button color="primary" type="submit">Start Monitoring</button>              
-                  </mat-card-actions>
-                </div>
-    
-
-                
-            <div class="col">
+            <div fxFlex="0 1 calc(40% - 32px)" fxLayoutAlign="flex-end">
               <mat-card-actions>
-                <button  mat-raised-button color="warn" (click)="reset()" type="button">Reset</button>
+                <button mat-raised-button color="primary" type="submit">Start Monitoring</button>
+                <button mat-raised-button color="warn" (click)="reset()" type="button">Reset</button>
               </mat-card-actions>
             </div>
-    
+
+
           </div>
+
         </mat-expansion-panel>
       </mat-accordion>
 
     </mat-card-content>
+    <!-- <div fxLayout="row wrap" fxLayoutGap="32px" fxLayoutAlign="flex-start" fxLayout.xs="column">
+      <div fxFlex="0 1 calc(40% - 32px)">
+        <mat-label class="p-2" [hidden]="!todaysDataTime">Last Updated : <strong>{{todaysDataTime}}</strong></mat-label>
+      </div>
+    </div> -->
+
 
     <mat-card-content>
 
@@ -136,86 +174,100 @@
         <mat-expansion-panel [expanded]=true>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Result
+              <label [hidden]="todaysDataTime">Result</label>
+              <label [hidden]="!todaysDataTime">Last Updated : <strong>{{todaysDataTime}}</strong></label>
             </mat-panel-title>
             <mat-panel-description>
-              <label [hidden]="!todaysDataTime">Last Updated : <strong>{{todaysDataTime}}</strong></label>
+              <!-- <label [hidden]="!todaysDataTime">Last Updated : <strong>{{todaysDataTime}}</strong></label> -->
             </mat-panel-description>
           </mat-expansion-panel-header>
-            
-          <div class="row">
-            <div class="col">
+
+          <div fxLayout="row wrap" fxLayoutGap="32px" fxLayoutAlign="flex-start" fxLayout.xs="column">
+
+            <div fxFlex="0 1 calc(100% - 32px)">
               <mat-form-field class="full-width">
                 <mat-label>Search Table</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="Ex. hosp" #input>
               </mat-form-field>
             </div>
-            <div class="col">
+          </div>
+
+          <div>
+
+
+            <div class="example-container ">
+              <mat-table [dataSource]="dataSource" matSort>
+
+                <!-- date Column -->
+
+                <ng-container matColumnDef="date">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
+                  <mat-cell *matCellDef="let element" data-label="Date"> {{element.date}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                  <mat-cell *matCellDef="let element" data-label="Name"> {{element.name}} </mat-cell>
+                </ng-container>
+
+                <!-- pincode Column -->
+                <ng-container matColumnDef="pincode">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Pincode </mat-header-cell>
+                  <mat-cell *matCellDef="let element" data-label="Pincode"> {{element.pincode}} </mat-cell>
+                </ng-container>
+
+                <!-- Age Column -->
+                <ng-container matColumnDef="min_age_limit">
+                  <mat-header-cell *matHeaderCellDef> Age </mat-header-cell>
+                  <mat-cell *matCellDef="let element" data-label="Age"> {{element.min_age_limit}} </mat-cell>
+                </ng-container>
+
+                <!-- Vaccine Column -->
+                <ng-container matColumnDef="vaccine">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Vaccine </mat-header-cell>
+                  <mat-cell *matCellDef="let element" data-label="Vaccine"> {{element.vaccine}} </mat-cell>
+                </ng-container>
+
+                <!-- Dose 1 Column -->
+                <ng-container matColumnDef="available_capacity_dose1">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Dose 1 </mat-header-cell>
+                  <mat-cell *matCellDef="let element" data-label=" Dose 1"> {{element.available_capacity_dose1}}
+                  </mat-cell>
+                </ng-container>
+
+                <!-- Dose 2 Column -->
+                <ng-container matColumnDef="available_capacity_dose2">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Dose 2 </mat-header-cell>
+                  <mat-cell *matCellDef="let element" data-label=" Dose 2 "> {{element.available_capacity_dose2}}
+                  </mat-cell>
+                </ng-container>
+
+                <!-- Fee Column -->
+                <ng-container matColumnDef="fee">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Fee </mat-header-cell>
+                  <mat-cell *matCellDef="let element" data-label="Fee"> {{element.fee}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+                <!-- Row shown when there is no matching data. -->
+                <mat-row *matNoDataRow>
+                  <td [hidden]="!todaysDataTime" class="mat-cell" colspan="4">No data matching the filter
+                    "{{input.value}}"</td>
+                </mat-row>
+              </mat-table>
+            </div>
+
+
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="32px" fxLayoutAlign="flex-start" fxLayout.xs="column">
+            <div fxFlex="0 1 calc(30% - 32px)" fxLayoutAlign="flex-end">
+            </div>
+            <div fxFlex="0 1 calc(70% - 32px)" fxLayoutAlign="flex-end">
               <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
             </div>
-          </div>
-          <div>
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-28" matSort>
-    
-              <!-- date Column -->
-    
-              <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-                <td mat-cell *matCellDef="let element"> {{element.date}} </td>
-              </ng-container>
-    
-              <!-- Name Column -->
-              <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-              </ng-container>
-    
-              <!-- pincode Column -->
-              <ng-container matColumnDef="pincode">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Pincode </th>
-                <td mat-cell *matCellDef="let element"> {{element.pincode}} </td>
-              </ng-container>
-    
-              <!-- Age Column -->
-              <ng-container matColumnDef="min_age_limit">
-                <th mat-header-cell *matHeaderCellDef> Age </th>
-                <td mat-cell *matCellDef="let element"> {{element.min_age_limit}} </td>
-              </ng-container>
-    
-              <!-- Vaccine Column -->
-              <ng-container matColumnDef="vaccine">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Vaccine </th>
-                <td mat-cell *matCellDef="let element"> {{element.vaccine}} </td>
-              </ng-container>
-    
-              <!-- Dose 1 Column -->
-              <ng-container matColumnDef="available_capacity_dose1">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Dose 1 </th>
-                <td mat-cell *matCellDef="let element"> {{element.available_capacity_dose1}} </td>
-              </ng-container>
-    
-              <!-- Dose 2 Column -->
-              <ng-container matColumnDef="available_capacity_dose2">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Dose 2 </th>
-                <td mat-cell *matCellDef="let element"> {{element.available_capacity_dose2}} </td>
-              </ng-container>
-    
-              <!-- Fee Column -->
-              <ng-container matColumnDef="fee">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Fee </th>
-                <td mat-cell *matCellDef="let element"> {{element.fee}} </td>
-              </ng-container>
-    
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    
-              <!-- Row shown when there is no matching data. -->
-              <tr class="mat-row" *matNoDataRow>
-                <td [hidden]="!todaysDataTime" class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-              </tr>
-            </table>
-    
-    
           </div>
         </mat-expansion-panel>
       </mat-accordion>
@@ -224,4 +276,7 @@
     </mat-card-content>
 
   </mat-card>
+
+
+
 </form>

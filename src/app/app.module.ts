@@ -11,6 +11,7 @@ import { SettingsComponent } from './_pages/settings/settings.component';
 import { SlotBookingComponent } from './_pages/slot-booking/slot-booking.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -65,6 +66,7 @@ import { MatTableModule } from '@angular/material/table';
     BrowserAnimationsModule,
     LayoutModule,
     ReactiveFormsModule,
+    FlexLayoutModule, 
 
     MatAutocompleteModule,
     MatCheckboxModule,

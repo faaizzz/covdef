@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit(): void {
-    console.log(this.searchForm);
+    // console.log(this.searchForm);
     // console.log(this.selectedVaccineTypes);
     // console.log(this.selectedAges);
     this.stopTimer();
@@ -111,8 +111,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.searchForm.patchValue(
       {
-        state: null,
-        district: null,
+        state: 17,
+        district: 307,
         day: 7,
         dose1: true,
         dose2: true,
@@ -176,7 +176,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         district: null
       }
     )
-    console.log(event.value);
+    // console.log(event.value);
     this.getDistricts(event.value);
 
   }
@@ -274,7 +274,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
 
 
-        console.log(this.sessions);
+        // console.log(this.sessions);
 
         this.dataSource = new MatTableDataSource<Session>(this.sessions);
         this.dataSource.paginator = this.paginator;
