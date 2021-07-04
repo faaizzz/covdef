@@ -1,5 +1,5 @@
 # CovDef
-Live Demo : [Covid Defender](https://covdef.z30.web.core.windows.net/)
+Live Demo : [Covid Defender](https://faaizzz.github.io/covdef/)
 
 # Features
 * Live update on Covid Vaccine Availability of each districts in India.
