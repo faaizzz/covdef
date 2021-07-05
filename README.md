@@ -1,7 +1,7 @@
 # CovDef
 Live Demo : [Covid Defender](https://faaizzz.github.io/covdef/)
 
-![](demo.gif) ![](demo responsive.gif)
+![](demo.gif) ![](demo-responsive.gif)
 
 
 # Features
