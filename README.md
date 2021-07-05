@@ -1,6 +1,8 @@
 # CovDef
 Live Demo : [Covid Defender](https://faaizzz.github.io/covdef/)
 
+![](demo.gif)
+
 # Features
 * Live update on Covid Vaccine Availability of each districts in India.
 * Filtering based on Vaccine Type, Age, Dose and Fees.
