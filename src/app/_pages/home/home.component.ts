@@ -111,8 +111,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.searchForm.patchValue(
       {
-        state: 17,
-        district: 307,
+        state: null,
+        district: null,
         day: 7,
         dose1: true,
         dose2: true,
