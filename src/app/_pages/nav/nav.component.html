@@ -1,21 +1,30 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar color="primary">
       <span>
         Menu
       </span>
     </mat-toolbar>
-    <mat-nav-list>
+    <mat-nav-list fxLayout="column" fxLayoutAlign="center center">
       <a mat-list-item href="#">
         <mat-icon>home</mat-icon>
-         <span class="">Home</span> 
+        <span class="">Home</span>
       </a>
       <a routerLink="/slot-booking" mat-list-item href="#">
         <mat-icon>date_range</mat-icon>
         Slot Booking
+      </a>
+      <a mat-list-item href="#">
+        <mat-icon></mat-icon>
+      </a>
+      <a class="" mat-list-item href="https://github.com/faaizzz/covdef#covdef" target="_blank">
+        <mat-icon>description</mat-icon>
+        Demo
+      </a>
+      <a class="" mat-list-item href="https://github.com/faaizzz/covdef" target="_blank">
+        <mat-icon>contact_support</mat-icon>
+        Develop with us
       </a>
       <!-- <a routerLink="/settings" mat-list-item href="#">
         <mat-icon>settings</mat-icon>
@@ -25,11 +34,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
@@ -38,5 +43,27 @@
     <router-outlet></router-outlet>
     <!-- <app-home></app-home> -->
     <!-- Add Content Here -->
+    <!-- Footer -->
+    <!-- <div class="page-footer" fxLayout="row wrap" fxLayoutGap="32px" fxLayoutAlign="center center" fxLayout.xs="column">
+
+  <footer>
+    <div class="footer-col p-10 " fxFlexAlign="center" fxFlex="0 1 calc(20% - 32px)" >© 2020 Copyright:
+      <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+    </div>
+    <div class="footer-col p-10 " fxFlexAlign="center" fxFlex="0 1 calc(20% - 32px)" >© 2020 Copyright:
+      <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+    </div>  
+  </footer>
+
+</div> -->
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <div>
+        Need Support : <a href="mailto:faaizrissad@gmail.com"> faaizrissad@gmail.com</a>
+      </div>
+      <div>
+        LinkedIn : <a href="https://www.linkedin.com/in/faaiz-rissad/" target="_blank"> https://www.linkedin.com/in/faaiz-rissad/</a>
+      </div>
+    </div>
+    <!-- Footer -->
   </mat-sidenav-content>
 </mat-sidenav-container>
