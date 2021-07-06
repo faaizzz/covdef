@@ -30,7 +30,7 @@
             </div>
             <div fxFlex="0 1 calc(20% - 32px)">
               <mat-form-field class="full-width">
-                <mat-select placeholder="District" formControlName="district">
+                <mat-select placeholder="District" (selectionChange)='onDistrictChanged($event)' formControlName="district">
                   <mat-option *ngFor="let district of districts" [value]="district.district_id">
                     {{ district.district_name }}
                   </mat-option>
@@ -100,14 +100,19 @@
               </section>
 
             </div>
-            <div fxFlex="0 1 calc(40% - 32px)" fxLayoutAlign="flex-end">
+
+            <div fxFlex="0 1 calc(25% - 32px)" fxLayoutAlign="flex-end">
               <mat-card-actions>
                 <button mat-raised-button color="primary" type="submit">Start Monitoring</button>
                 <button mat-raised-button color="warn" (click)="reset()" type="button">Reset</button>
               </mat-card-actions>
             </div>
+            <div fxFlex="0 1 calc(5% - 32px)">
+              <section class="example-section">
+                <mat-slide-toggle formControlName="IsSoundNotificationEnabled" p-2>Enable Sound Notification</mat-slide-toggle>
+              </section>
 
-
+            </div>
           </div>
 
         </mat-expansion-panel>

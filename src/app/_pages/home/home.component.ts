@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { State } from 'src/app/_models/state';
 import { District } from 'src/app/_models/district';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatAccordion } from '@angular/material/expansion';
+import { Howl, Howler } from 'howler';
 
 export interface PeriodicElement {
   name: string;
@@ -22,7 +23,9 @@ export interface PeriodicElement {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  sound: any;
 
   displayedColumns: string[] = ['date', 'name', 'pincode', 'min_age_limit', 'vaccine', 'available_capacity_dose1', 'available_capacity_dose2', 'fee'];
   dataSource: MatTableDataSource<Session>;
@@ -32,7 +35,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   days: Array<number> = [1, 2, 3, 4, 5, 6, 7, 14];
   vaccineTypes: Array<string> = ["COVAXIN", "COVISHIELD", "SPUTNIK", "PFIZER"];
   ages: Array<number> = [18, 40, 45];
-  timeIntervals: Array<number> = [2,3,5, 10, 15, 20, 30, 60];
+  timeIntervals: Array<number> = [2, 3, 5, 10, 15, 20, 30, 60];
   sessions: Session[] = [];
   todaysDataTime = '';
   timer: number = 0;
@@ -45,18 +48,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
   age45: boolean = true;
   feesFree: boolean = true;
   feesPaid: boolean = true;
-
-
+  // IsSoundNotificationEnabled: boolean = false;
 
 
   searchForm = this.fb.group({
-    state: [17, Validators.required],
-    district: [307, Validators.required],
+    state: [isNaN(+localStorage.getItem('state')) || +localStorage.getItem('state') == 0 ?
+      null : +localStorage.getItem('state'), Validators.required],
+    district: [isNaN(+localStorage.getItem('district')) || +localStorage.getItem('district') == 0 ?
+      null : +localStorage.getItem('district'), Validators.required],
     day: 7,
     dose1: true,
     dose2: true,
     vaccineType: [],
     timeInterval: 5,
+    IsSoundNotificationEnabled: false
   });
 
 
@@ -71,9 +76,26 @@ export class HomeComponent implements OnInit, AfterViewInit {
   constructor(private fb: FormBuilder, private cowinApiService: CowinApiService) {
   }
 
-  ngOnInit(): void {
-    this.reset();
+
+  ngOnDestroy(): void {
+    this.stopTimer();
   }
+
+  ngOnInit(): void {
+    this.sound = new Howl({
+      src: ['/assets/sounds/iphone-sms.mp3']
+    });
+
+    console.log(this.searchForm.value);
+
+    // console.log("state : " + localStorage.getItem('state'));
+    // console.log("district : " + localStorage.getItem('district'));
+
+    this.resetTable();
+    this.setDefaults();
+
+  }
+
 
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
@@ -94,21 +116,41 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // console.log(this.selectedVaccineTypes);
     // console.log(this.selectedAges);
     this.stopTimer();
-    if(this.searchForm.status == "VALID"){
+    if (this.searchForm.status == "VALID") {
       this.autoSearch();
-      this.accordion.closeAll();
+      // this.accordion.closeAll();
     }
     // this.search();
 
   }
 
-  reset(){
+  reset() {
     this.stopTimer();
+    this.resetTable();
+    this.resetFilterValues();
+    this.removeDefaultStateDistrict();
+    this.setDefaults();
+  }
 
-    this.dataSource = new MatTableDataSource();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  setDefaults() {
 
+    this.getStates();
+    this.getDistricts(this.searchForm.value.state);
+    this.sessions = [];
+    this.todaysDataTime = '';
+    this.timer = 0;
+    this.selectedVaccineTypes = [];
+    this.selectedAges = [];
+    this.dose1 = true;
+    this.dose2 = true;
+    this.age18 = true;
+    this.age40 = true;
+    this.age45 = true;
+    this.feesFree = true;
+    this.feesPaid = true;
+  }
+
+  resetFilterValues() {
     this.searchForm.patchValue(
       {
         state: null,
@@ -117,24 +159,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
         dose1: true,
         dose2: true,
         vaccineType: [],
-        timeInterval: 5
+        timeInterval: 5,
       }
     )
-    this.getStates();
-    this.getDistricts(this.searchForm.value.state);
-    this.sessions = [];
-    this.todaysDataTime = '';
-    this.timer = 0;
-    this.selectedVaccineTypes = [];
-    this.selectedAges= [];
-    this.dose1= true;
-    this.dose2 = true;
-    this.age18 = true;
-    this.age40 = true;
-    this.age45 = true;
-    this.feesFree = true;
-    this.feesPaid = true;
+  }
 
+  resetTable() {
+    this.dataSource = new MatTableDataSource();
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   autoSearch() {
@@ -178,7 +211,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     )
     // console.log(event.value);
     this.getDistricts(event.value);
+    this.setDefaultStateDistrict();
 
+  }
+
+  onDistrictChanged(event: any) {
+    this.setDefaultStateDistrict();
   }
 
   onDose1Changed(event: any) {
@@ -274,6 +312,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
 
 
+        if (this.searchForm.value.IsSoundNotificationEnabled && this.sessions.length > 0) {
+          this.sound.play();
+        }
+
+
         // console.log(this.sessions);
 
         this.dataSource = new MatTableDataSource<Session>(this.sessions);
@@ -284,6 +327,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     })
 
+  }
+
+  setDefaultStateDistrict() {
+    localStorage.setItem('state', JSON.stringify(this.searchForm.value.state));
+    localStorage.setItem('district', JSON.stringify(this.searchForm.value.district));
+  }
+
+  removeDefaultStateDistrict() {
+    localStorage.removeItem('state');
+    localStorage.removeItem('district');
   }
 
 
