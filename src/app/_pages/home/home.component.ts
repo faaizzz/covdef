@@ -83,10 +83,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.sound = new Howl({
-      src: ['/assets/sounds/iphone-sms.mp3']
+      src: ['assets/sounds/iphone-sms.mp3']
     });
 
-    console.log(this.searchForm.value);
+    // console.log(this.searchForm.value);
 
     // console.log("state : " + localStorage.getItem('state'));
     // console.log("district : " + localStorage.getItem('district'));
