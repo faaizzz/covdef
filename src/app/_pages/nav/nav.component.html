@@ -39,12 +39,17 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center" >
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>Covid Defender</span>
+      <div>Covid Defender</div>
+      <div  >
+        <label class="time" *ngIf="!(isHandset$ | async)">Current Time : </label>
+        <label class="time" >{{todaysDataTime}}</label>
+        
+      </div>
     </mat-toolbar>
     <router-outlet></router-outlet>
     <!-- <app-home></app-home> -->

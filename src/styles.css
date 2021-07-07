@@ -14,3 +14,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .p-2{
     padding: 2px;
 }
+
+.time{
+    font-size: 0.80rem;
+}
