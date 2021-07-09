@@ -49,6 +49,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { MatTableModule } from '@angular/material/table';
     LayoutModule,
     ReactiveFormsModule,
     FlexLayoutModule, 
+    NgxGoogleAnalyticsModule.forRoot('G-QWV32D4QS3'),
 
     MatAutocompleteModule,
     MatCheckboxModule,
