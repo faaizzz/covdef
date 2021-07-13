@@ -1,7 +1,7 @@
 <form [formGroup]="searchForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="slot-card">
     <mat-card-header>
-      <mat-card-title>Slot Availability Monitor</mat-card-title>
+      <mat-card-title>Vaccination Center Slot Availability Monitor </mat-card-title>
     </mat-card-header>
     <mat-card-content>
 
@@ -53,7 +53,7 @@
             </div>
             <div fxFlex="0 1 calc(20% - 32px)">
               <mat-form-field class="full-width">
-                <mat-select placeholder="Time Interval in seconds" formControlName="timeInterval">
+                <mat-select placeholder="Refresh Time Interval in seconds" formControlName="timeInterval">
                   <mat-option *ngFor="let timeInterval of timeIntervals" [value]="timeInterval">
                     {{ timeInterval }}
                   </mat-option>

@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, sans-serif!important; }
 
 .p-10{
     padding: 10px;
@@ -18,3 +18,37 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .time{
     font-size: 0.80rem;
 }
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+    height: 36px;
+}
+
+.mat-toolbar, .mat-toolbar h1, .mat-toolbar h2, .mat-toolbar h3, .mat-toolbar h4, .mat-toolbar h5, .mat-toolbar h6 {
+    font: 300 14px/20px Roboto, sans-serif;
+    letter-spacing: normal;
+    margin: 0;
+}
+
+.mat-card-title {
+    /* font-size: 14px; */
+    font-weight: 400;
+    line-height: normal;
+    text-align: center;
+}
+
+.mat-button, .mat-raised-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button, .mat-fab, .mat-mini-fab {
+    font-family: Roboto, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05rem;
+}
+
+.mat-list-base .mat-list-item {
+    font: 300 14px/20px Roboto, sans-serif;
+}
+
+
+.mat-expansion-panel-content {
+    font: 100 12px/20px Roboto, sans-serif;
+    letter-spacing: normal;
+  }
