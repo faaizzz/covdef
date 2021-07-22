@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   states: State[] = [];
   districts: District[] = [];
   days: Array<number> = [1, 2, 3, 4, 5, 6, 7, 14];
-  vaccineTypes: Array<string> = ["COVAXIN", "COVISHIELD", "SPUTNIK", "PFIZER"];
+  vaccineTypes: Array<string> = ["COVAXIN", "COVISHIELD"];
   ages: Array<number> = [18, 40, 45];
   timeIntervals: Array<number> = [2, 3, 5, 10, 15, 20, 30, 60];
   sessions: Session[] = [];
