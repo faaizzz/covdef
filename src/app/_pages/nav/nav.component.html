@@ -7,13 +7,13 @@
       </span>
     </mat-toolbar>
     <mat-nav-list fxLayout="column" fxLayoutAlign="center center">
-      <a mat-list-item href="#">
+      <a mat-list-item href="#home">
         <mat-icon>home</mat-icon>
         <span class="">Home</span>
       </a>
       <!-- <a routerLink="/slot-booking" mat-list-item href="#"> -->
-        <a class="" mat-list-item href="https://selfregistration.cowin.gov.in/" target="_blank">
-          <mat-icon>date_range</mat-icon>
+      <a class="" mat-list-item href="https://selfregistration.cowin.gov.in/" target="_blank">
+        <mat-icon>date_range</mat-icon>
         Slot Booking
       </a>
       <mat-divider></mat-divider>
@@ -24,6 +24,10 @@
       <a class="" mat-list-item href="https://github.com/faaizzz/covdef" target="_blank">
         <img src="assets/icons/icons8-github-24.png" class="p-5" alt="Github" />
         Develop with us
+      </a>
+      <a mat-list-item href="#about">
+        <mat-icon>info</mat-icon>
+        About
       </a>
       <!-- <a class="" mat-list-item href="https://www.linkedin.com/in/faaiz-rissad/" target="_blank">
         <img src="assets/icons/icons8-linkedin-24.png" class="p-5" alt="LinkedIn" />
@@ -40,16 +44,16 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center" >
+    <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <div>Covid Defender</div>
-      <div  >
+      <div>
         <label class="time" *ngIf="!(isHandset$ | async)">Current Time : </label>
-        <label class="time" >{{todaysDataTime}}</label>
-        
+        <label class="time">{{todaysDataTime}}</label>
+
       </div>
     </mat-toolbar>
     <router-outlet></router-outlet>

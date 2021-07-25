@@ -52,3 +52,19 @@ body { margin: 0; font-family: Roboto, sans-serif!important; }
     font: 100 12px/20px Roboto, sans-serif;
     letter-spacing: normal;
   }
+
+  .justify{
+      text-align: justify;
+  }
+
+  .indent{
+    text-indent: 20px;
+  }
+
+  .color-primary{
+      color: #3f51b5;
+  }
+
+  .mt-20{
+      margin-top: 20px;
+  }

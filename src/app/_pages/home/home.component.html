@@ -1,7 +1,8 @@
-<form [formGroup]="searchForm" novalidate (ngSubmit)="onSubmit()">
+<form id="home" class="p-10" [formGroup]="searchForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="slot-card">
     <mat-card-header>
-      <mat-card-title>Vaccination Center Slot Availability Monitor </mat-card-title>
+      <mat-card-title> <span class="color-primary">CovDef</span> - Vaccination Center Slot Availability Monitor
+      </mat-card-title>
     </mat-card-header>
     <mat-card-content>
 
@@ -30,7 +31,8 @@
             </div>
             <div fxFlex="0 1 calc(20% - 32px)">
               <mat-form-field class="full-width">
-                <mat-select placeholder="District" (selectionChange)='onDistrictChanged($event)' formControlName="district">
+                <mat-select placeholder="District" (selectionChange)='onDistrictChanged($event)'
+                  formControlName="district">
                   <mat-option *ngFor="let district of districts" [value]="district.district_id">
                     {{ district.district_name }}
                   </mat-option>
@@ -109,7 +111,8 @@
             </div>
             <div fxFlex="0 1 calc(5% - 32px)">
               <section class="example-section">
-                <mat-slide-toggle formControlName="IsSoundNotificationEnabled" p-10>Enable Sound Notification</mat-slide-toggle>
+                <mat-slide-toggle formControlName="IsSoundNotificationEnabled" p-10>Enable Sound Notification
+                </mat-slide-toggle>
               </section>
 
             </div>
@@ -231,3 +234,94 @@
 
 
 </form>
+
+<div class="p-10">
+  <mat-card class="about-card" id="about" >
+    <mat-card-header>
+      <mat-card-title>About <span class="color-primary">Cov</span>id <span class="color-primary">Def</span>ender
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content fxLayout="row wrap" fxLayoutGap="32px" fxLayoutAlign="start start" fxLayout.xs="column">
+
+
+      <mat-card fxFlex="0 1 calc(50% - 32px)">
+        <mat-card-header>
+          <mat-card-title>What is CovDef?</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+            <p class="justify indent">Covdef stands for <span class="color-primary">Cov</span>id <span
+                class="color-primary">Def</span>ender.</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card fxFlex="0 1 calc(50% - 32px)">
+        <mat-card-header>
+          <mat-card-title>How to use CovDef?</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+            <p class="justify indent">Click <a href="https://github.com/faaizzz/covdef#covdef" target="_blank">here</a> to see the sample demo of CovDef.</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+        
+      <mat-card class="mt-20" fxFlex="0 1 calc(50% - 32px)">
+        <mat-card-header>
+          <mat-card-title>Why CovDef?
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+            <p class="justify indent">Entire world is currenlty facing the pandemic situation due to covid 19 virus. Every country is providing vaccins to their citizents for fighting against covid together. CovDef is created to enable the vaccination slot booking much more easier based on vaccine availability.</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+  
+      <mat-card class="mt-20" fxFlex="0 1 calc(50% - 32px)">
+        <mat-card-header>
+          <mat-card-title>What is the purpose of CovDef?</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+            <p class="justify indent">Covid defender(<strong>Covdef</strong>) is a web based application which can be used
+              to get notified about live slot availability of
+              Vaccinations across different districts in India. CovDef provides the features for filtering the results
+              based on Age, Vaccine Type, Fee etc. along with the sound notification mechanism. In covdef, users are allowed to
+              set the interval for sound notification as per their convenience.</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="mt-20" fxFlex="0 1 calc(100% - 32px)">
+        <mat-card-header>
+          <mat-card-title>What are the features of CovDef?</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+            <ul>
+              <li>
+                Live update on Covid Vaccine Availability of each districts in India.
+              </li>
+              <li>
+                Filtering based on Vaccine Type, Age, Dose and Fees.
+              </li>
+              <li>
+                Automatic page refresh based on user defined time interval.
+              </li>
+              <li>
+                Table search and sort options.
+              </li>
+            </ul>
+          </div>
+        </mat-card-content>
+      </mat-card>
+  
+
+    </mat-card-content>
+  
+
+  </mat-card>
+</div>
